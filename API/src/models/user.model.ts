@@ -5,6 +5,7 @@ const UserSchema = new Schema<User>(
     {
         name:{
             type:String,
+            unique:true,
             required:true,
         },
         email:{

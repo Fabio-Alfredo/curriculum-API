@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
 import { handleHTTP } from "../utils/error.handle"
-import { registeNewUser } from "../services/auth.service"
+import { loginUser, registeNewUser } from "../services/auth.service"
 
-const registerUser = async ( req:Request, res:Response)=>{
+const registerUserController = async ( req:Request, res:Response)=>{
     try{
         const data = req.body;
         const register = await registeNewUser(data);
@@ -12,4 +12,15 @@ const registerUser = async ( req:Request, res:Response)=>{
     }
 }
 
-export {registerUser};
+const loginUserController = async(req:Request, res:Response)=>{
+    try{
+        const data = req.body;
+        const {name, password}=data;
+        const response = await loginUser({name, password});
+        res.send(response);
+    }catch(e){
+        handleHTTP(res, "INVALID_DATA_USER", e);
+    }
+}
+
+export {registerUserController, loginUserController};
